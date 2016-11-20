@@ -3,6 +3,7 @@ package hashiapp.pomodorotimer
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
@@ -21,12 +22,17 @@ class MainActivity : AppCompatActivity(), ViewPager.OnPageChangeListener, PageFr
 
         var tabLayout = findViewById(R.id.tabs) as TabLayout
         var viewPager = findViewById(R.id.pager) as ViewPager
-        val pageTitle = arrayOf("HOME", "EVENT", "SETTING")
+        val pageTitle = arrayOf("TIMER", "LOG")
 
         var adapter: FragmentPagerAdapter = object : FragmentPagerAdapter(getSupportFragmentManager()) {
-            override fun getItem(position: Int) = PageFragment.newInstance(position+1)
+            //override fun getItem(position: Int) = PageFragment.newInstance(position+1)
             override fun getPageTitle(position: Int) = pageTitle[position]
             override fun getCount() = pageTitle.size
+
+            override fun getItem(position: Int): Fragment {
+                if(position == 0) return TimerFragment()
+                else return PageFragment.newInstance(position+1)
+            }
         }
 
         viewPager.adapter = adapter
